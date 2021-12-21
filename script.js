@@ -1,6 +1,7 @@
 const pegaBotao = document.querySelector('#criar-tarefa');
 const pegaInput = document.querySelector('#texto-tarefa');
 const pegaLista = document.querySelector('#lista-tarefas');
+const pegaBotaoApagaTudo = document.querySelector('#apaga-tudo');
 
 function adicionaTarefa() {
   const li = document.createElement('li');
@@ -41,7 +42,15 @@ function adicionaTarefa() {
     }
     }
   }
+  function apagaTudo (){
+    const selecionaLi3 = document.querySelectorAll('li');
+    for (let index = 0; index < selecionaLi3.length; index += 1) {
+      selecionaLi3[index].remove();
+    }
+  }
+  
 pegaBotao.addEventListener('click', adicionaTarefa);
+pegaBotaoApagaTudo.addEventListener('click', apagaTudo);
 
 
 
