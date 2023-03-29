@@ -14,24 +14,6 @@ function mudaBackgroundLi(event) {
   event.target.style.backgroundColor = 'rgb(128, 128, 128)';
 }
 
-// function tiraRiscoLi(event) {
-//   if (event.target.style.textDecoration === 'line-through solid rgb(0, 0, 0)') {
-//     event.target.classList.remove('completed');
-//     event.target.style.textDecoration = 'none';
-//   } else {
-//     event.target.classList.add('completed');
-//     event.target.style.textDecoration = 'line-through solid rgb(0, 0, 0)';
-//   }
-//}
-
-// const addEvent = (array, func, type) => {
-//   if (array.length > 0) {
-//     for (let index = 0; index < array.length; index += 1) {
-//       array[index].addEventListener(type, func);
-//     }
-//   }
-// }
-
 function riscaELimpa(event) {
   const item = event.target;
   const className = 'completed';
@@ -53,14 +35,16 @@ function adicionaTarefa(event) {
 }
 
 
-function apagaTudo() {
+function apagaTudo(event) {
+  event.preventDefault();
   const selecionaLi3 = document.querySelectorAll('li');
   for (let index = 0; index < selecionaLi3.length; index += 1) {
     selecionaLi3[index].remove();
   }
 }
 
-function apagaFinalizados() {
+function apagaFinalizados(event) {
+  event.preventDefault();
   const selecionaFinalizados = document.querySelectorAll('.completed');
   for (let index = 0; index < selecionaFinalizados.length; index += 1) {
     selecionaFinalizados[index].remove();
