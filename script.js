@@ -14,6 +14,34 @@ function mudaBackgroundLi(event) {
   event.target.style.backgroundColor = 'rgb(128, 128, 128)';
 }
 
+// function tiraRiscoLi(event) {
+//   if (event.target.style.textDecoration === 'line-through solid rgb(0, 0, 0)') {
+//     event.target.classList.remove('completed');
+//     event.target.style.textDecoration = 'none';
+//   } else {
+//     event.target.classList.add('completed');
+//     event.target.style.textDecoration = 'line-through solid rgb(0, 0, 0)';
+//   }
+//}
+
+// const addEvent = (array, func, type) => {
+//   if (array.length > 0) {
+//     for (let index = 0; index < array.length; index += 1) {
+//       array[index].addEventListener(type, func);
+//     }
+//   }
+// }
+
+function riscaELimpa(event) {
+  const item = event.target;
+  const className = 'completed';
+  if (item.classList.contains(className)) {
+    event.target.classList.remove('completed');
+  } else {
+    item.classList.add(className);
+  }
+}
+
 function adicionaTarefa(event) {
   event.preventDefault();
   const li = document.createElement('li');
@@ -21,27 +49,7 @@ function adicionaTarefa(event) {
   pegaLista.appendChild(li);
   pegaInput.value = '';
   li.addEventListener('click', mudaBackgroundLi);
-  li.style.backgroundColor = 'white';
-  li.addEventListener('dblclick', riscaLi);
-}
-
-function tiraRiscoLi(event) {
-  if (event.target.style.textDecoration === 'line-through solid rgb(0, 0, 0)') {
-    event.target.classList.remove('completed');
-    event.target.style.textDecoration = 'none';
-  } else {
-    event.target.classList.add('completed');
-    event.target.style.textDecoration = 'line-through solid rgb(0, 0, 0)';
-  }
-}
-
-function riscaLi(event) {
-  const selecionaLi2 = document.querySelectorAll('li');
-  event.target.style.textDecoration = 'line-through solid rgb(0, 0, 0)';
-  event.target.classList.add('completed');
-  for (let index = 0; index < selecionaLi2.length; index += 1) {
-    selecionaLi2[index].addEventListener('dblclick', tiraRiscoLi);
-  }
+  li.addEventListener('dblclick', riscaELimpa);
 }
 
 
