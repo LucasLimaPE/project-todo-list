@@ -4,6 +4,16 @@ const pegaLista = document.querySelector('#lista-tarefas');
 const pegaBotaoApagaTudo = document.querySelector('#apaga-tudo');
 const pegaBotaoApagaFinalizados = document.querySelector('#remover-finalizados');
 
+function mudaBackgroundLi(event) {
+  const selecionaLi = document.querySelectorAll('li');
+  for (let index = 0; index < selecionaLi.length; index += 1) {
+    selecionaLi[index].classList.remove('selected');
+    selecionaLi[index].style.backgroundColor = 'white';
+  }
+  event.target.classList.add('selected');
+  event.target.style.backgroundColor = 'rgb(128, 128, 128)';
+}
+
 function adicionaTarefa(event) {
   event.preventDefault();
   const li = document.createElement('li');
@@ -15,14 +25,14 @@ function adicionaTarefa(event) {
   li.addEventListener('dblclick', riscaLi);
 }
 
-function mudaBackgroundLi(event) {
-  const selecionaLi = document.querySelectorAll('li');
-  for (let index = 0; index < selecionaLi.length; index += 1) {
-    selecionaLi[index].classList.remove('selected');
-    selecionaLi[index].style.backgroundColor = 'white';
+function tiraRiscoLi(event) {
+  if (event.target.style.textDecoration === 'line-through solid rgb(0, 0, 0)') {
+    event.target.classList.remove('completed');
+    event.target.style.textDecoration = 'none';
+  } else {
+    event.target.classList.add('completed');
+    event.target.style.textDecoration = 'line-through solid rgb(0, 0, 0)';
   }
-  event.target.classList.add('selected');
-  event.target.style.backgroundColor = 'rgb(128, 128, 128)';
 }
 
 function riscaLi(event) {
@@ -34,15 +44,6 @@ function riscaLi(event) {
   }
 }
 
-function tiraRiscoLi(event) {
-  if (event.target.style.textDecoration === 'line-through solid rgb(0, 0, 0)') {
-    event.target.classList.remove('completed');
-    event.target.style.textDecoration = 'none';
-  } else {
-    event.target.classList.add('completed');
-    event.target.style.textDecoration = 'line-through solid rgb(0, 0, 0)';
-  }
-}
 
 function apagaTudo() {
   const selecionaLi3 = document.querySelectorAll('li');
