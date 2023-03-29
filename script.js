@@ -4,8 +4,8 @@ const pegaLista = document.querySelector('#lista-tarefas');
 const pegaBotaoApagaTudo = document.querySelector('#apaga-tudo');
 const pegaBotaoApagaFinalizados = document.querySelector('#remover-finalizados');
 
-
-function adicionaTarefa() {
+function adicionaTarefa(event) {
+  event.preventDefault();
   const li = document.createElement('li');
   li.innerText = pegaInput.value;
   pegaLista.appendChild(li);
