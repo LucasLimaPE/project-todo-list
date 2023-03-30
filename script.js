@@ -13,7 +13,7 @@ function mudaBackgroundLi(event) {
   const selecionaLi = document.querySelectorAll('li');
   for (let index = 0; index < selecionaLi.length; index += 1) {
     selecionaLi[index].classList.remove('selected');
-    selecionaLi[index].style.backgroundColor = 'white';
+    selecionaLi[index].style.backgroundColor = 'rgb(27 , 38 , 59)';
   }
   item.classList.add('selected');
   item.style.backgroundColor = 'rgb(128, 128, 128)';
