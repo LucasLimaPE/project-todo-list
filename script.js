@@ -25,8 +25,6 @@ function riscaELimpa(event) {
   }
 }
 
-
-
 const saveList = () => {
   const list = document.querySelectorAll('li');
   const arrayToSave = [];
@@ -66,6 +64,7 @@ const takeAndDisplayList = () => {
 
 function adicionaTarefa(event) {
   event.preventDefault();
+  if (pegaInput.value === '') return window.alert('Para criar uma tarefa deve-se preencher o campo.')
   const li = document.createElement('li');
   li.innerText = pegaInput.value;
   pegaLista.appendChild(li);
@@ -73,7 +72,6 @@ function adicionaTarefa(event) {
   li.addEventListener('click', mudaBackgroundLi);
   li.addEventListener('dblclick', riscaELimpa);
 }
-
 
 function apagaTudo(event) {
   event.preventDefault();
