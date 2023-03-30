@@ -3,6 +3,7 @@ const pegaInput = document.querySelector('#texto-tarefa');
 const pegaLista = document.querySelector('#lista-tarefas');
 const pegaBotaoApagaTudo = document.querySelector('#apaga-tudo');
 const pegaBotaoApagaFinalizados = document.querySelector('#remover-finalizados');
+const saveListButton = document.getElementById('salvar-tarefas');
 
 function mudaBackgroundLi(event) {
   const selecionaLi = document.querySelectorAll('li');
@@ -21,6 +22,45 @@ function riscaELimpa(event) {
     event.target.classList.remove('completed');
   } else {
     item.classList.add(className);
+  }
+}
+
+
+
+const saveList = () => {
+  const list = document.querySelectorAll('li');
+  const arrayToSave = [];
+  const markedItens = [];
+  if (list.length > 0) {
+    for (let index = 0; index < list.length; index += 1) {
+      if (list[index].classList.contains('completed')) {
+        markedItens.push(index);
+      }
+      const itemToSave = list[index].innerText;
+      arrayToSave.push(itemToSave);
+    }
+    const listToSave = JSON.stringify(arrayToSave);
+    const markedToSave = JSON.stringify(markedItens);
+    localStorage.setItem('myList', listToSave);
+    localStorage.setItem('marked', markedToSave);
+  }
+}
+
+const takeAndDisplayList = () => {
+  const listToDisplay = JSON.parse(localStorage.getItem('myList'));
+  const markedItens = JSON.parse(localStorage.getItem('marked'));
+  if(listToDisplay !== null) {
+    for (let index = 0; index < listToDisplay.length; index += 1) {
+      const list = document.getElementById('lista-tarefas');
+      const li = document.createElement('li');
+      li.innerText = listToDisplay[index];
+      if (markedItens.includes(index)) {
+        li.classList.add('completed');
+      }
+      li.addEventListener('click', mudaBackgroundLi);
+      li.addEventListener('dblclick', riscaELimpa);
+      list.appendChild(li);
+    }
   }
 }
 
@@ -54,3 +94,8 @@ function apagaFinalizados(event) {
 pegaBotaoApagaFinalizados.addEventListener('click', apagaFinalizados);
 pegaBotao.addEventListener('click', adicionaTarefa);
 pegaBotaoApagaTudo.addEventListener('click', apagaTudo);
+saveListButton.addEventListener('click', saveList);
+
+window.onload = () => {
+  takeAndDisplayList();
+}
