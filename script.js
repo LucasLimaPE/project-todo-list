@@ -34,25 +34,25 @@ const setNotStringITem = (keyName, item) => {
   return localStorage.setItem(keyName, itemToString);
 };
 
-const getNotStringItem = (keyName) => JSON.parse(localStorage.getItem(keyName));
+// const getNotStringItem = (keyName) => JSON.parse(localStorage.getItem(keyName));
+
+const getMarkedItemsIndexes = (liElements) => Array.from(liElements)
+  .reduce((markedItens, li, index) => {
+    if (li.classList.contains('completed')) {
+      markedItens.push(index);
+    }
+    return markedItens;
+  }, []);
+
+const getLiElementsTexts = (liElements) => Array.from(liElements).map((li) => li.innerText);
 
 const saveList = () => {
-  const list = document.querySelectorAll('li');
-  const arrayToSave = [];
-  const markedItens = [];
-  if (list.length > 0) {
-    for (let index = 0; index < list.length; index += 1) {
-      if (list[index].classList.contains('completed')) {
-        markedItens.push(index);
-      }
-      const itemToSave = list[index].innerText;
-      arrayToSave.push(itemToSave);
-    }
-    const listToSave = JSON.stringify(arrayToSave);
-    const markedToSave = JSON.stringify(markedItens);
-    localStorage.setItem('myList', listToSave);
-    localStorage.setItem('marked', markedToSave);
-  }
+  const liElements = document.querySelectorAll('li');
+  const itemsToSave = getLiElementsTexts(liElements);
+  const markedItemsIndexes = getMarkedItemsIndexes(liElements);
+
+  setNotStringITem('myList', itemsToSave);
+  setNotStringITem('marked', markedItemsIndexes);
 };
 
 const takeAndDisplayList = () => {
