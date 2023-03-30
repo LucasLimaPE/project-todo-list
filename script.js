@@ -9,13 +9,14 @@ const moveDownButton = document.getElementById('mover-baixo');
 const deleteItemButton = document.getElementById('remover-selecionado');
 
 function mudaBackgroundLi(event) {
+  const item = event.target;
   const selecionaLi = document.querySelectorAll('li');
   for (let index = 0; index < selecionaLi.length; index += 1) {
     selecionaLi[index].classList.remove('selected');
     selecionaLi[index].style.backgroundColor = 'white';
   }
-  event.target.classList.add('selected');
-  event.target.style.backgroundColor = 'rgb(128, 128, 128)';
+  item.classList.add('selected');
+  item.style.backgroundColor = 'rgb(128, 128, 128)';
 }
 
 function riscaELimpa(event) {
@@ -45,12 +46,12 @@ const saveList = () => {
     localStorage.setItem('myList', listToSave);
     localStorage.setItem('marked', markedToSave);
   }
-}
+};
 
 const takeAndDisplayList = () => {
   const listToDisplay = JSON.parse(localStorage.getItem('myList'));
   const markedItens = JSON.parse(localStorage.getItem('marked'));
-  if(listToDisplay !== null) {
+  if (listToDisplay !== null) {
     for (let index = 0; index < listToDisplay.length; index += 1) {
       const list = document.getElementById('lista-tarefas');
       const li = document.createElement('li');
@@ -63,11 +64,11 @@ const takeAndDisplayList = () => {
       list.appendChild(li);
     }
   }
-}
+};
 
 function adicionaTarefa(event) {
   event.preventDefault();
-  if (pegaInput.value === '') return window.alert('Para criar uma tarefa deve-se preencher o campo.')
+  if (pegaInput.value === '') return window.alert('Para criar uma tarefa deve-se preencher o campo.');
   const li = document.createElement('li');
   li.innerText = pegaInput.value;
   pegaLista.appendChild(li);
@@ -97,43 +98,40 @@ const moveUp = () => {
   const takeListItens = Array.from(document.querySelectorAll('li'));
   const indexOfItem = takeListItens.indexOf(selectedItem[0]);
   if (indexOfItem > 0 && selectedItem.length) {
-  const previusItem = takeListItens[indexOfItem - 1];
-  takeListItens[indexOfItem - 1] = selectedItem[0];
-  takeListItens[indexOfItem] = previusItem;
-  for (let index = 0; index < takeListItens.length; index += 1) {
-    pegaLista.appendChild(takeListItens[index]);
+    const previusItem = takeListItens[indexOfItem - 1];
+    takeListItens[indexOfItem - 1] = selectedItem[0];
+    takeListItens[indexOfItem] = previusItem;
+    for (let index = 0; index < takeListItens.length; index += 1) {
+      pegaLista.appendChild(takeListItens[index]);
     }
-    return
   }
-}
+};
 
 const moveDown = () => {
   const selectedItem = Array.from(document.querySelectorAll('.selected'));
   const takeListItens = Array.from(document.querySelectorAll('li'));
   const indexOfItem = takeListItens.indexOf(selectedItem[0]);
-  if (selectedItem.length > 0 && takeListItens.length - indexOfItem > 1 ) {
-  const nextItem = takeListItens[indexOfItem + 1];
-  takeListItens[indexOfItem + 1] = selectedItem[0];
-  takeListItens[indexOfItem] = nextItem;
-  for (let index = 0; index < takeListItens.length; index += 1) {
-    pegaLista.appendChild(takeListItens[index]);
+  if (selectedItem.length > 0 && takeListItens.length - indexOfItem > 1) {
+    const nextItem = takeListItens[indexOfItem + 1];
+    takeListItens[indexOfItem + 1] = selectedItem[0];
+    takeListItens[indexOfItem] = nextItem;
+    for (let index = 0; index < takeListItens.length; index += 1) {
+      pegaLista.appendChild(takeListItens[index]);
     }
-    return
   }
-}
+};
 
 const deleteItem = () => {
   const selectedItem = Array.from(document.querySelectorAll('.selected'));
   const takeListItens = Array.from(document.querySelectorAll('li'));
   if (selectedItem.length > 0) {
-  const filteredItens = takeListItens.filter((item) => item !== selectedItem[0]);
-  pegaLista.innerText = '';
-  for (let index = 0; index < filteredItens.length; index += 1) {
-    pegaLista.appendChild(filteredItens[index]);
+    const filteredItens = takeListItens.filter((item) => item !== selectedItem[0]);
+    pegaLista.innerText = '';
+    for (let index = 0; index < filteredItens.length; index += 1) {
+      pegaLista.appendChild(filteredItens[index]);
     }
-    return
   }
-}
+};
 
 pegaBotaoApagaFinalizados.addEventListener('click', apagaFinalizados);
 pegaBotao.addEventListener('click', adicionaTarefa);
@@ -141,8 +139,8 @@ pegaBotaoApagaTudo.addEventListener('click', apagaTudo);
 saveListButton.addEventListener('click', saveList);
 moveUpButton.addEventListener('click', moveUp);
 moveDownButton.addEventListener('click', moveDown);
-deleteItemButton.addEventListener('click', deleteItem)
+deleteItemButton.addEventListener('click', deleteItem);
 
 window.onload = () => {
   takeAndDisplayList();
-}
+};
