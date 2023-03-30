@@ -4,8 +4,8 @@
 }
 
 body {
-  background-color: #1B263B;
-  color: #E0E1DD;
+  background-color: rgb(27 , 38 , 59);
+  color: rgb(224 , 225 , 221);
 }
 
 .completed {
@@ -17,6 +17,15 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 5px;
+  padding: 5px;
+}
+
+#function-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   margin: 5px;
   padding: 5px;
 }
