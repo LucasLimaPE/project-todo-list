@@ -4,6 +4,9 @@ const pegaLista = document.querySelector('#lista-tarefas');
 const pegaBotaoApagaTudo = document.querySelector('#apaga-tudo');
 const pegaBotaoApagaFinalizados = document.querySelector('#remover-finalizados');
 const saveListButton = document.getElementById('salvar-tarefas');
+const moveUpButton = document.getElementById('mover-cima');
+const moveDownButton = document.getElementById('mover-baixo');
+const deleteItemButton = document.getElementById('remover-selecionado');
 
 function mudaBackgroundLi(event) {
   const selecionaLi = document.querySelectorAll('li');
@@ -89,10 +92,56 @@ function apagaFinalizados(event) {
   }
 }
 
+const moveUp = () => {
+  const selectedItem = Array.from(document.querySelectorAll('.selected'));
+  const takeListItens = Array.from(document.querySelectorAll('li'));
+  const indexOfItem = takeListItens.indexOf(selectedItem[0]);
+  if (indexOfItem > 0 && selectedItem.length) {
+  const previusItem = takeListItens[indexOfItem - 1];
+  takeListItens[indexOfItem - 1] = selectedItem[0];
+  takeListItens[indexOfItem] = previusItem;
+  for (let index = 0; index < takeListItens.length; index += 1) {
+    pegaLista.appendChild(takeListItens[index]);
+    }
+    return
+  }
+}
+
+const moveDown = () => {
+  const selectedItem = Array.from(document.querySelectorAll('.selected'));
+  const takeListItens = Array.from(document.querySelectorAll('li'));
+  const indexOfItem = takeListItens.indexOf(selectedItem[0]);
+  if (selectedItem.length > 0 && takeListItens.length - indexOfItem > 1 ) {
+  const nextItem = takeListItens[indexOfItem + 1];
+  takeListItens[indexOfItem + 1] = selectedItem[0];
+  takeListItens[indexOfItem] = nextItem;
+  for (let index = 0; index < takeListItens.length; index += 1) {
+    pegaLista.appendChild(takeListItens[index]);
+    }
+    return
+  }
+}
+
+const deleteItem = () => {
+  const selectedItem = Array.from(document.querySelectorAll('.selected'));
+  const takeListItens = Array.from(document.querySelectorAll('li'));
+  if (selectedItem.length > 0) {
+  const filteredItens = takeListItens.filter((item) => item !== selectedItem[0]);
+  pegaLista.innerText = '';
+  for (let index = 0; index < filteredItens.length; index += 1) {
+    pegaLista.appendChild(filteredItens[index]);
+    }
+    return
+  }
+}
+
 pegaBotaoApagaFinalizados.addEventListener('click', apagaFinalizados);
 pegaBotao.addEventListener('click', adicionaTarefa);
 pegaBotaoApagaTudo.addEventListener('click', apagaTudo);
 saveListButton.addEventListener('click', saveList);
+moveUpButton.addEventListener('click', moveUp);
+moveDownButton.addEventListener('click', moveDown);
+deleteItemButton.addEventListener('click', deleteItem)
 
 window.onload = () => {
   takeAndDisplayList();
