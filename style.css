@@ -40,4 +40,15 @@ button , input , legend {
   padding: 2px;
 }
 
+a {
+  color: rgb(224 , 225 , 221);
+}
 
+#footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 150px;
+  padding: 5px;
+}
