@@ -34,7 +34,7 @@ const setNotStringITem = (keyName, item) => {
   return localStorage.setItem(keyName, itemToString);
 };
 
-// const getNotStringItem = (keyName) => JSON.parse(localStorage.getItem(keyName));
+const getNotStringItem = (keyName) => JSON.parse(localStorage.getItem(keyName));
 
 const getMarkedItemsIndexes = (liElements) => Array.from(liElements)
   .reduce((markedItens, li, index) => {
@@ -55,27 +55,36 @@ const saveList = () => {
   setNotStringITem('marked', markedItemsIndexes);
 };
 
+function createLiElement(text, marked) {
+  const li = document.createElement('li');
+  li.innerText = text;
+  if (marked) {
+    li.classList.add('completed');
+  }
+  li.addEventListener('click', mudaBackgroundLi);
+  li.addEventListener('dblclick', riscaELimpa);
+  return li;
+}
+
 const takeAndDisplayList = () => {
-  const listToDisplay = JSON.parse(localStorage.getItem('myList'));
-  const markedItens = JSON.parse(localStorage.getItem('marked'));
+  const listToDisplay = getNotStringItem('myList');
+  const markedItens = getNotStringItem('marked');
   if (listToDisplay !== null) {
-    for (let index = 0; index < listToDisplay.length; index += 1) {
+    listToDisplay.forEach((element, index) => {
       const list = document.getElementById('lista-tarefas');
-      const li = document.createElement('li');
-      li.innerText = listToDisplay[index];
-      if (markedItens.includes(index)) {
-        li.classList.add('completed');
-      }
-      li.addEventListener('click', mudaBackgroundLi);
-      li.addEventListener('dblclick', riscaELimpa);
+      const marked = markedItens.includes(index);
+      const li = createLiElement(element, marked);
       list.appendChild(li);
-    }
+    });
   }
 };
 
 function adicionaTarefa(event) {
   event.preventDefault();
-  if (pegaInput.value === '') return window.alert('Para criar uma tarefa deve-se preencher o campo.');
+  if (pegaInput.value === '') {
+    return window
+      .alert('Para criar uma tarefa deve-se preencher o campo.');
+  }
   const li = document.createElement('li');
   li.innerText = pegaInput.value;
   pegaLista.appendChild(li);
@@ -106,8 +115,7 @@ const moveUp = () => {
   const indexOfItem = takeListItens.indexOf(selectedItem[0]);
   if (indexOfItem > 0 && selectedItem.length) {
     const previusItem = takeListItens[indexOfItem - 1];
-    takeListItens[indexOfItem - 1] = selectedItem[0];
-    takeListItens[indexOfItem] = previusItem;
+    [takeListItens[indexOfItem - 1], takeListItens[indexOfItem]] = [selectedItem[0], previusItem];
     for (let index = 0; index < takeListItens.length; index += 1) {
       pegaLista.appendChild(takeListItens[index]);
     }
@@ -120,7 +128,7 @@ const moveDown = () => {
   const indexOfItem = takeListItens.indexOf(selectedItem[0]);
   if (selectedItem.length > 0 && takeListItens.length - indexOfItem > 1) {
     const nextItem = takeListItens[indexOfItem + 1];
-    takeListItens[indexOfItem + 1] = selectedItem[0];
+    [takeListItens[indexOfItem + 1], takeListItens[indexOfItem]] = [selectedItem[0], nextItem];
     takeListItens[indexOfItem] = nextItem;
     for (let index = 0; index < takeListItens.length; index += 1) {
       pegaLista.appendChild(takeListItens[index]);
