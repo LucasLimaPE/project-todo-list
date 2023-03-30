@@ -29,6 +29,13 @@ function riscaELimpa(event) {
   }
 }
 
+const setNotStringITem = (keyName, item) => {
+  const itemToString = JSON.stringify(item);
+  return localStorage.setItem(keyName, itemToString);
+};
+
+const getNotStringItem = (keyName) => JSON.parse(localStorage.getItem(keyName));
+
 const saveList = () => {
   const list = document.querySelectorAll('li');
   const arrayToSave = [];
